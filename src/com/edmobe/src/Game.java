@@ -2,9 +2,11 @@ package com.edmobe.src;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -22,6 +24,8 @@ public class Game extends JPanel implements ActionListener{
 	
 	private static final long serialVersionUID = 1L;
 
+	private String background = "/images/bg.gif";
+	
 	public Game() {
 		setFocusable(true);
 		
@@ -36,11 +40,19 @@ public class Game extends JPanel implements ActionListener{
 		
 		Graphics2D g2d = (Graphics2D) g;
 		
+		g2d.drawImage(getBackgroundImage(), 0, 0, null);
+		
 		player.draw(g2d);
+	}
+	
+	public Image getBackgroundImage(){
+		ImageIcon i = new ImageIcon(getClass().getResource(background));
+		return i.getImage();
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		player.update();
 		repaint();
 	}	
 }

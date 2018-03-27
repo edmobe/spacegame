@@ -19,7 +19,8 @@ public class Player extends GlobalPosition{
 	}
 	
 	public void update(){
-		
+		//x += 1;
+		y += 1;
 	}
 	
 	public void draw(Graphics2D g2d){
