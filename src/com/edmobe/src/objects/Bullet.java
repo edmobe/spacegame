@@ -27,20 +27,24 @@ public class Bullet {
 		this.id = id;
 	}
 	
-	public void tick() {
+	public void update() {
 		y -= 10;
 	}
 	
-	public void draw(Graphics2D g2d){
+	public void render(Graphics2D g2d){
 		g2d.drawImage(getBulletImage(), x, y, null); // draws bullet image on the screen.
 	}
 	
 	public Image getBulletImage(){
 		ImageIcon icon = new ImageIcon(getClass().getResource(bulletimage)); // player image.
-		Image newsize = icon.getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_DEFAULT);
+		Image newsize = icon.getImage().getScaledInstance(5, 20, java.awt.Image.SCALE_DEFAULT);
 			// new image, resizes icon.
 		icon = new ImageIcon(newsize); // instantiation of the resized image.
 		return icon.getImage(); // returns the player image resized.
+	}
+
+	public int getY() {
+		return y;
 	}
 
 }

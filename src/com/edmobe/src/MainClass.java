@@ -2,8 +2,9 @@ package com.edmobe.src;
 
 import javax.swing.JFrame;
 
-// import com.edmobe.src.lists.LinkedList;
-// import com.edmobe.src.objects.Bullet;
+//import java.util.LinkedList;
+//import com.edmobe.src.lists.LinkedList;
+//import com.edmobe.src.objects.Bullet;
 
 /**
  * Game's main class. Creates a frame.
@@ -12,7 +13,34 @@ import javax.swing.JFrame;
  */
 public class MainClass {
 	
-	public static void main(String args[]){		
+	public static void main(String args[]){
+		/*
+		Bullet b1 = new Bullet(0, 0);
+		Bullet b2 = new Bullet(0, 0);
+		Bullet b3 = new Bullet(1, 1);
+		Bullet b4 = new Bullet(2, 2);
+		b1.setId("b1");
+		b2.setId("b2");
+		b3.setId("b3");
+		b4.setId("b4");
+		LinkedList<Bullet> l1 = new LinkedList<Bullet>();
+		System.out.println(l1.toString() + " " + l1.size());
+		l1.addLast(b1);
+		System.out.println(l1.toString() + " " + l1.size());
+		l1.addLast(b2);
+		System.out.println(l1.toString() + " " + l1.size());
+		l1.addLast(b3);
+		System.out.println(l1.toString() + " " + l1.size());
+		l1.addLast(b4);
+		System.out.println(l1.toString() + " " + l1.size());
+		/*
+		l1.removeFirst();
+		System.out.println(l1.toString() + " " + l1.size());
+		l1.remove(b2);
+		System.out.println(l1.toString() + " " + l1.size());
+		*/
+		
+		
 		JFrame frame = new JFrame(); // new frame instantiated.
 		frame.pack(); // frame positioned on the display.
 		frame.setSize(640, 480); // setting frame dimensions.

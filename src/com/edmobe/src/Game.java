@@ -21,7 +21,8 @@ import com.edmobe.src.objects.Player;
 public class Game extends JPanel implements ActionListener{
 
 	Timer gamelooptimer; // timer variable for the loop.
-	Player player; // player object of the game.
+	Player player; // player object.
+	Controller c; // controller object.
 	
 	private static final long serialVersionUID = 1L; // sets an ID to the Game class.
 
@@ -35,7 +36,9 @@ public class Game extends JPanel implements ActionListener{
 		gamelooptimer.start(); // starts the game timer.
 		
 		player = new Player(290, 400); // initializes the player.
-		addKeyListener(new KeyInput(player)); // adds key listener for every key event.
+		c = new Controller(this);
+		
+		addKeyListener(new KeyInput(player, c)); // adds key listener for every key event.
 	}
 	
 	public void paint(Graphics g) {
@@ -46,6 +49,7 @@ public class Game extends JPanel implements ActionListener{
 		g2d.drawImage(getBackgroundImage(), 0, 0, null); // draws the background.
 		
 		player.draw(g2d); // draws the player
+		c.render(g2d);
 	}
 	
 	public Image getBackgroundImage(){
@@ -56,6 +60,7 @@ public class Game extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) { // game loop.
 		player.update(); // updates the player.
+		c.update();
 		repaint(); // calls the paint method.
 	}	
 }

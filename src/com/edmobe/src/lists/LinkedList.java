@@ -1,16 +1,16 @@
 package com.edmobe.src.lists;
 
+import java.util.*;
 
 /***************************************************************************
  * A Linked List class with a private static inner Node class.
  *
  *****************************************************************************/
 
-import java.util.*;
-
 public class LinkedList<AnyType> implements Iterable<AnyType>
 {
    private Node<AnyType> head;
+   private int length;
 
  /**
    *  Constructs an empty list
@@ -18,6 +18,7 @@ public class LinkedList<AnyType> implements Iterable<AnyType>
    public LinkedList()
    {
       head = null;
+      length = 0;
    }
  /**
    *  Returns true if the list is empty
@@ -27,6 +28,13 @@ public class LinkedList<AnyType> implements Iterable<AnyType>
    {
       return head == null;
    }
+   /**
+    *  Returns the length of the list.
+    *
+    */
+   public int size() {
+	   return length;
+   }
  /**
    *  Inserts a new node at the beginning of this list.
    *
@@ -34,6 +42,7 @@ public class LinkedList<AnyType> implements Iterable<AnyType>
    public void addFirst(AnyType item)
    {
       head = new Node<AnyType>(item, head);
+      length++;
    }
  /**
    *  Returns the first element in the list.
@@ -53,6 +62,7 @@ public class LinkedList<AnyType> implements Iterable<AnyType>
    {
       AnyType tmp = getFirst();
       head = head.next;
+      if (length != 0) {length--;}
       return tmp;
    }
  /**
@@ -69,6 +79,7 @@ public class LinkedList<AnyType> implements Iterable<AnyType>
          while(tmp.next != null) tmp = tmp.next;
 
          tmp.next = new Node<AnyType>(item, null);
+         length++;
       }
    }
  /**
@@ -91,6 +102,7 @@ public class LinkedList<AnyType> implements Iterable<AnyType>
    public void clear()
    {
       head = null;
+      length = 0;
    }
  /**
    *  Returns true if this list contains the specified element.
@@ -114,7 +126,7 @@ public class LinkedList<AnyType> implements Iterable<AnyType>
       Node<AnyType> tmp = head;
       for (int k = 0; k < pos; k++) tmp = tmp.next;
 
-      if( tmp == null) throw new IndexOutOfBoundsException();
+      if(tmp == null) throw new IndexOutOfBoundsException();
 
       return tmp.data;
    }
@@ -140,8 +152,10 @@ public class LinkedList<AnyType> implements Iterable<AnyType>
 
       while(tmp != null && !tmp.data.equals(key)) tmp = tmp.next;
 
-      if(tmp != null)
+      if(tmp != null) {
          tmp.next = new Node<AnyType>(toInsert, tmp.next);
+         length++;
+      }
    }
  /**
    *  Inserts a new node before a node containing the key.
@@ -154,6 +168,7 @@ public class LinkedList<AnyType> implements Iterable<AnyType>
       if(head.data.equals(key))
       {
          addFirst(toInsert);
+         length++;
          return;
       }
 
@@ -166,8 +181,10 @@ public class LinkedList<AnyType> implements Iterable<AnyType>
          cur = cur.next;
       }
       //insert between cur and prev
-      if(cur != null)
+      if(cur != null) {
          prev.next = new Node<AnyType>(toInsert, cur);
+         length++;
+      }
    }
  /**
    *  Removes the first occurrence of the specified element in this list.
@@ -181,6 +198,7 @@ public class LinkedList<AnyType> implements Iterable<AnyType>
       if( head.data.equals(key) )
       {
          head = head.next;
+         length--;
          return;
       }
 
@@ -198,6 +216,7 @@ public class LinkedList<AnyType> implements Iterable<AnyType>
 
       //delete cur node
       prev.next = cur.next;
+      length--;
    }
  /**
    *  Returns a deep copy of the list
@@ -233,7 +252,7 @@ public class LinkedList<AnyType> implements Iterable<AnyType>
    }
  /**
    *  Reverses the list
-   *  Complewxity: O(n)
+   *  Complexity: O(n)
    */
    public LinkedList<AnyType> reverse()
    {
