@@ -2,6 +2,9 @@ package com.edmobe.src;
 
 import javax.swing.JFrame;
 
+// import com.edmobe.src.lists.LinkedList;
+// import com.edmobe.src.objects.Bullet;
+
 /**
  * Game's main class. Creates a frame.
  * @author edmobe
@@ -9,7 +12,7 @@ import javax.swing.JFrame;
  */
 public class MainClass {
 	
-	public static void main(String args[]){
+	public static void main(String args[]){		
 		JFrame frame = new JFrame(); // new frame instantiated.
 		frame.pack(); // frame positioned on the display.
 		frame.setSize(640, 480); // setting frame dimensions.
