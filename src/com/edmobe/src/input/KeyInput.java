@@ -9,7 +9,7 @@ import com.edmobe.src.objects.Player;
 
 public class KeyInput extends KeyAdapter{
 	
-	Player player; // player object.
+	Player player;
 	Controller c;
 	
 	public KeyInput(Player player, Controller c) {
@@ -22,7 +22,7 @@ public class KeyInput extends KeyAdapter{
 		
 		player.keyPressed(event); // calls player's keyPressed method.
 		if (key == KeyEvent.VK_SPACE) {c.addBullet(new Bullet(player.x + 23, player.y - 10));}
-		
+			// adds a bullet when the space key is pressed.
 	}
 	
 	public void keyReleased(KeyEvent event) { // when a key is released.

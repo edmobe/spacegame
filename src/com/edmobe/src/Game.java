@@ -36,7 +36,7 @@ public class Game extends JPanel implements ActionListener{
 		gamelooptimer.start(); // starts the game timer.
 		
 		player = new Player(290, 400); // initializes the player.
-		c = new Controller(this);
+		c = new Controller(this); // initializes the controller.
 		
 		addKeyListener(new KeyInput(player, c)); // adds key listener for every key event.
 	}
@@ -48,8 +48,8 @@ public class Game extends JPanel implements ActionListener{
 		
 		g2d.drawImage(getBackgroundImage(), 0, 0, null); // draws the background.
 		
-		player.draw(g2d); // draws the player
-		c.render(g2d);
+		player.draw(g2d); // draws the player.
+		c.render(g2d); // draws all the bullets.
 	}
 	
 	public Image getBackgroundImage(){
@@ -60,7 +60,7 @@ public class Game extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) { // game loop.
 		player.update(); // updates the player.
-		c.update();
+		c.update(); // updates the controller.
 		repaint(); // calls the paint method.
 	}	
 }
