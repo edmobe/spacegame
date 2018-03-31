@@ -39,7 +39,7 @@ public class Controller {
 	}
 
 	public void addBullet(Bullet block) {
-		b.addLast(block);
+		b.add(block);
 	}
 	
 	public void removeBullet(Bullet block) {
