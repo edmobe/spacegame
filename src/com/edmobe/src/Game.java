@@ -10,7 +10,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import com.edmobe.src.enemyrows.EnemyRow;
 import com.edmobe.src.input.KeyInput;
+import com.edmobe.src.lists.LinkedList;
+import com.edmobe.src.objects.Bullet;
 import com.edmobe.src.objects.Player;
 
 /**
@@ -22,9 +25,14 @@ import com.edmobe.src.objects.Player;
  */
 public class Game extends JPanel implements ActionListener {
 
-	Timer gamelooptimer; // timer variable for the loop.
-	Player player; // player object.
-	Controller c; // controller object.
+	private Timer gamelooptimer; // timer variable for the loop.
+	private Player player; // player object.
+	private Controller c; // controller object.
+	
+	public LinkedList<Bullet> bulletList;
+	public EnemyRow enemyRow;
+	
+	public static int level = 1;
 
 	private static final long serialVersionUID = 1L; // sets an ID to the Game class.
 
@@ -39,6 +47,9 @@ public class Game extends JPanel implements ActionListener {
 
 		player = new Player(290, 400); // initializes the player.
 		c = new Controller(this); // initializes the controller.
+		
+		bulletList = c.getBullets();
+		enemyRow = c.getEnemies();
 
 		addKeyListener(new KeyInput(player, c)); // adds key listener for every key event.
 	}

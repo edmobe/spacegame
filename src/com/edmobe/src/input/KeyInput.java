@@ -22,9 +22,12 @@ public class KeyInput extends KeyAdapter {
 
 		player.keyPressed(event); // calls player's keyPressed method.
 		if (key == KeyEvent.VK_SPACE) {
-			c.addBullet(new Bullet(player.x + 23, player.y - 10));
+			if (c.bulletDelay == 0) {
+				c.addBullet(new Bullet(player.x + 17, player.y - 50));
+				c.bulletDelay = 50;
+			}
 		}
-		// adds a bullet when the space key is pressed.
+		// adds a bullet when the space key is pressed and the player hasn't shoot recently.
 	}
 
 	public void keyReleased(KeyEvent event) { // when a key is released.

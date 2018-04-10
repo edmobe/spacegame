@@ -5,21 +5,17 @@ import java.awt.Image;
 
 import javax.swing.ImageIcon;
 
-import com.edmobe.src.FriendlyEntity;
+import com.edmobe.src.GlobalPosition;
 
-public class Bullet implements FriendlyEntity {
+public class Bullet extends GlobalPosition {
 
-	private int x;
-	private int y;
-
-	private Image bulletImage; // bullet image object.
 	private String bulletimage = "/images/bullet.png"; // player image path.
 
 	public Bullet(int x, int y) {
-		this.x = x;
-		this.y = y;
-
-		bulletImage = getImage(); // defines the image object for each bullet.
+		super(x, y);
+		
+		width = 20;
+		height = 80;
 	}
 
 	public void update() {
@@ -27,7 +23,7 @@ public class Bullet implements FriendlyEntity {
 	}
 
 	public void render(Graphics2D g2d) {
-		g2d.drawImage(bulletImage, x, y, null); // draws bullet image on the screen.
+		g2d.drawImage(getImage(), x, y, null); // draws bullet image on the screen.
 	}
 
 	public int getY() {
@@ -36,9 +32,6 @@ public class Bullet implements FriendlyEntity {
 
 	public Image getImage() {
 		ImageIcon icon = new ImageIcon(getClass().getResource(bulletimage)); // bullet image.
-		Image newsize = icon.getImage().getScaledInstance(5, 20, java.awt.Image.SCALE_DEFAULT);
-		// new image, resizes icon.
-		icon = new ImageIcon(newsize); // instantiation of the resized image.
 		return icon.getImage(); // returns the bullet image resized.
 	}
 

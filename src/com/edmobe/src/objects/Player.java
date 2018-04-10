@@ -6,23 +6,27 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.ImageIcon;
 
-import com.edmobe.src.FriendlyEntity;
 import com.edmobe.src.GlobalPosition;
 
-/*
+/**
  * Player object.
+ * @author edmobe
+ *
  */
-public class Player extends GlobalPosition implements FriendlyEntity {
-
-	private String playerimage = "/images/player.png"; // player image path.
+public class Player extends GlobalPosition {
 
 	private int velX = 0; // x axis speed.
 
 	private boolean right = false; // indicates that the player is moving right.
 	private boolean left = false; // indicates that the player is moving left.
 
+	private String playerimage = "/images/player.png"; // player image path.
+
 	public Player(int x, int y) {
 		super(x, y); // x and y from GlobalPosition.
+		
+		width = 50;
+		height = 50;
 	}
 
 	public void update() { // update player's changing parameters.
