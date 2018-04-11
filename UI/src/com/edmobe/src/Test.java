@@ -30,6 +30,8 @@ public class Test {
 		l.shuffle();
 		l.print();
 		
+		String a = "hola";
+		
 	}
 
 }

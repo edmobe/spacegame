@@ -52,6 +52,7 @@ public class Game extends JPanel implements ActionListener {
 		enemyRow = c.getEnemies();
 
 		addKeyListener(new KeyInput(player, c)); // adds key listener for every key event.
+		
 	}
 
 	public void paint(Graphics g) {

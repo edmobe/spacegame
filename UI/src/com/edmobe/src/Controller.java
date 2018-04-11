@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.util.Random;
 
 import com.edmobe.src.enemyrows.EnemyRowFactory;
+import com.edmobe.src.input.Server;
 import com.edmobe.src.enemyrows.EnemyRow;
 import com.edmobe.src.lists.LinkedList;
 import com.edmobe.src.objects.Bullet;
@@ -27,13 +28,14 @@ public class Controller {
 
 	public Controller(Game game) {
 		this.game = game;
-
+		
 		setNewRandom();
 
 		enemyRow = enemyRowFactory.getEnemyRow(3); // creates a new EnemyRow based on the random input.
 	}
 
 	public void update() {
+		
 		for (int i = 0; i < bulletList.size(); i++) { // for every bullet in the linked list.
 			TempBullet = bulletList.get(i);
 
