@@ -33,19 +33,24 @@ public class Game extends JPanel implements ActionListener {
 	public EnemyRow enemyRow;
 	
 	public static int level = 1;
+	public static int score = 0;
+	public static int randomRowType;
+	public static int nextRowType;
+	public static boolean over;
 
 	private static final long serialVersionUID = 1L; // sets an ID to the Game class.
 
 	private String background = "/images/bg.gif"; // background image path.
 
-	public Game() {
+	public Game() {		
+		
 		setFocusable(true); // its main function is allowing the player to control the game right.
 		// after he runs the MainClass, without having to click on the window.
 
 		gamelooptimer = new Timer(10, this); // instantiates the loop timer (10 ms -> 100 fps).
 		gamelooptimer.start(); // starts the game timer.
 
-		player = new Player(290, 400); // initializes the player.
+		player = new Player(290, 420); // initializes the player.
 		c = new Controller(this); // initializes the controller.
 		
 		bulletList = c.getBullets();
@@ -61,9 +66,9 @@ public class Game extends JPanel implements ActionListener {
 		Graphics2D g2d = (Graphics2D) g; // transfer the graphics into a Graphics2D function.
 
 		g2d.drawImage(getBackgroundImage(), 0, 0, null); // draws the background.
-
-		player.render(g2d); // draws the player.
+		
 		c.render(g2d); // draws all the bullets.
+		player.render(g2d); // draws the player.
 	}
 
 	public Image getBackgroundImage() {

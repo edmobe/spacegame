@@ -19,8 +19,10 @@ public class EnemyRowFactory {
 			return new EnemyRowB(c);
 		} else if (type == 3) {
 			return new EnemyRowC(c);
+		} else if (type == 4) {
+			return new EnemyRowD(c);
 		} else {
-			return null;
+			return new EnemyRowE(c);
 		}
 	}
 

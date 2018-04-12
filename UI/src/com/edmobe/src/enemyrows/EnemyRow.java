@@ -31,6 +31,11 @@ public abstract class EnemyRow {
 		row.remove(block);
 	}
 	
+	public void emptyRow() {
+		row.clear();
+		crow.clear();
+	}
+	
 	public LinkedList<Enemy> getRow() {
 		return row;
 	}

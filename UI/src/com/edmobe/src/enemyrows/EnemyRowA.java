@@ -20,7 +20,7 @@ public class EnemyRowA extends EnemyRow {
 
 		for (int i = 0; i < 5; i++) {
 			if (i == randomPos) {
-				addEnemy(new Boss(5 * 80, 0, c));
+				addEnemy(new Boss(i * 80, 0, c));
 			} else {
 				addEnemy(new Enemy(i * 80, 0, c));
 			}
@@ -45,9 +45,8 @@ public class EnemyRowA extends EnemyRow {
 
 				Enemy TempEnemy = row.get(i);
 
-				if (TempEnemy.y >= 400) {
-					System.out.println("GAME OVER!");
-					TempEnemy.y = 0;
+				if (TempEnemy.y >= 360) {
+					Game.over = true;
 				} else {
 					TempEnemy.y += 20 + (Game.level - 1) * 5;
 				}

@@ -55,6 +55,12 @@ public class CDLinkedList<T> extends LinkedList<T>{
 		length++;
 
 	}
+	
+	public void addSecond (T object) { // validations are not required because is an internal method.
+		Node<T> tmp = new Node<T>(object, head.next, head);
+		head.next = tmp;
+		tmp.next.previous = tmp;
+	}
 
 	@Override
 	public void remove(T object) {
@@ -175,6 +181,18 @@ public class CDLinkedList<T> extends LinkedList<T>{
 		head = null;
 		end = null;
 		length = 0;
+	}
+	
+	public void setHead(Node<T> head) {
+		this.head = head;
+	}
+	
+	public Node<T> getHead() {
+		return head;
+	}
+	
+	public Node<T> getEnd() {
+		return end;
 	}
 
 }

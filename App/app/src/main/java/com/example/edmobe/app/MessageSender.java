@@ -21,7 +21,7 @@ public class MessageSender extends AsyncTask <String, Void, Void>{
 
         try {
 
-            socket = new Socket("192.168.1.2", 4000);
+            socket = new Socket("192.168.1.2", 5000);
             printWriter = new PrintWriter(socket.getOutputStream()); // output
             printWriter.write(message);
             printWriter.flush();

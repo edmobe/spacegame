@@ -33,9 +33,8 @@ public class EnemyRowBasic extends EnemyRow {
 
 				Enemy TempEnemy = row.get(i);
 
-				if (TempEnemy.y >= 400) {
-					System.out.println("GAME OVER!");
-					TempEnemy.y = 0;
+				if (TempEnemy.y >= 360) {
+					Game.over = true;
 				} else {
 					TempEnemy.y += 20 + (Game.level - 1) * 5;
 				}

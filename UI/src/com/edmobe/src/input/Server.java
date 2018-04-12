@@ -10,7 +10,7 @@ import java.net.Socket;
 
 import com.sun.glass.events.KeyEvent;
 
-public class Server {
+public class Server extends Thread {
 	
 	private static Socket s;
 	private static ServerSocket ss;
@@ -19,12 +19,17 @@ public class Server {
 	private static String message;
 	private static int dir; // 0 = center, -1 = left, 1 = right.
 	
+	
+	public Server(String msg) {
+		super(msg);
+	}
+	
 		
-	public static void main(String[] args) throws AWTException {
+	public void run() {
 		
 		try {
 			
-			ss = new ServerSocket(4000);
+			ss = new ServerSocket(7000);
 			Robot robot = new Robot();
 			
 			while (true) {
@@ -52,7 +57,7 @@ public class Server {
 			}
 			
 			
-		} catch (IOException e) {
+		} catch (IOException | AWTException e) {
 			e.printStackTrace();
 		}
 		
@@ -71,6 +76,10 @@ public class Server {
 			robot.keyRelease(KeyEvent.VK_LEFT);
 		}
 		
+	}
+	
+	public String getMessage() {
+		return message;
 	}
 	
 }
