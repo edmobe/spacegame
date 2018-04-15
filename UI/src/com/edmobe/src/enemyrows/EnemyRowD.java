@@ -65,8 +65,13 @@ public class EnemyRowD extends EnemyRow {
 
 				Enemy TempEnemy = crow.get(i);
 
-				if (TempEnemy.update()) {
+				int updateId = TempEnemy.update();
+
+				if (updateId == 1) {
 					x += 40;
+					bubbleSort();
+				} else if (updateId == 2) {
+					bubbleSort();
 				}
 			}
 		}
@@ -78,64 +83,74 @@ public class EnemyRowD extends EnemyRow {
 			TempEnemy.x = x + i * 80;
 
 		}
-		
-		
-		bubbleSort();
 
 		x += Game.level * dir * 1;
 
 	}
-	
+
 	public void bubbleSort() {
 		
 		if (crow.size() > 1) {
-            boolean wasChanged;
+			
+			boolean wasChanged;
 
-            do {
-                Node<Enemy> current = crow.getHead();
-                Node<Enemy> previous = crow.getHead().previous;
-                Node<Enemy> next = crow.getHead().next;
-                wasChanged = false;
+			do {				
+				Node<Enemy> current = crow.getHead();
+				Node<Enemy> previous = crow.getEnd();
+				Node<Enemy> next = crow.getHead().next;
+				wasChanged = false;
+				
+				/*
+				 *Special case. Otherwise, the next while would loop because it's a circular list.
+				 */
+				if (crow.size() == 2) {
+					if (current.data.health < next.data.health) {
+						crow.setHead(next);
+						crow.setEnd(next);
+					}
+				}
 
-                while (next != crow.getHead()) {
-                    if (current.data.health < next.data.health) {
+				while (next != crow.getHead()) {
 
-                        wasChanged = true;
+					if (current.data.health < next.data.health) {
 
-                        if (current != crow.getHead()) {
-                            Node<Enemy> sig = next.next;
+						wasChanged = true;
 
-                            next.next = current;
-                            next.previous = previous;
-                            current.next = sig;
-                            current.previous = next;
-                            sig.previous = current;
-                            previous.next = next;
-                            
-                        } else {
-                            Node<Enemy> sig = next.next;
+						if (current == crow.getHead()) {
 
-                            crow.setHead(next);
-                            
-                            next.next = current;
-                            next.previous = previous;
-                            current.next = sig;
-                            current.previous = next;
-                            sig.previous = current;
-                            previous.next = next;
-                        }
+							crow.setHead(next);
 
-                        previous = next;
-                        next = current.next;
-                    } else { 
-                        previous = current;
-                        current = next;
-                        next = next.next;
-                    }
-                } 
-            } while( wasChanged );
-        }
-    }
+						}
+
+						if (current.next == crow.getEnd()) {
+
+							crow.setEnd(current);
+
+						}
+
+						Node<Enemy> sig = next.next;
+
+						next.next = current;
+						next.previous = previous;
+						current.next = sig;
+						current.previous = next;
+						sig.previous = current;
+						previous.next = next;
+
+						previous = next;
+						next = current.next;
+
+					} else {
+						previous = current;
+						current = next;
+						next = current.next;
+					}
+				}
+			} while (wasChanged);
+
+		}
+
+	}
 
 	@Override
 	public void render(Graphics2D g2d) { // draws the display

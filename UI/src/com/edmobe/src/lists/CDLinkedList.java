@@ -2,6 +2,8 @@ package com.edmobe.src.lists;
 
 import java.util.Random;
 
+import com.edmobe.src.objects.Enemy;
+
 public class CDLinkedList<T> extends LinkedList<T>{
 
 	private Node<T> end;
@@ -64,6 +66,7 @@ public class CDLinkedList<T> extends LinkedList<T>{
 
 	@Override
 	public void remove(T object) {
+		
 		if (head == null || object == null) {
 			throw new RuntimeException("Cannot delete");
 		}
@@ -81,7 +84,6 @@ public class CDLinkedList<T> extends LinkedList<T>{
 			}
 			
 			return;
-			
 		}
 		
 		if (end.data.equals(object)) {
@@ -129,24 +131,48 @@ public class CDLinkedList<T> extends LinkedList<T>{
 			return;
 		}
 
-		if (head.next == head) {
-			System.out.println(head.data + " <-> " + tmp.data);
-			return;
-		}
+		if (tmp.data instanceof Enemy) {
+			
+			if (head.next == head) {
+				System.out.println(((Enemy)head.data).health + " <-> " + ((Enemy)tmp.data).health);
+				return;
+			}
 
-		System.out.print(head.data + " <-> ");
-		tmp = head.next;
+			System.out.print(((Enemy)head.data).health + " <-> ");
+			tmp = head.next;
 
-		while (tmp.next != head) {
-			System.out.print(tmp.data + " <-> ");
+			while (tmp.next != head) {
+				System.out.print(((Enemy)tmp.data).health + " <-> ");
+				tmp = tmp.next;
+			}
+
+			System.out.print(((Enemy)tmp.data).health + " <-> ");
+
 			tmp = tmp.next;
+
+			System.out.println(((Enemy)tmp.data).health);
+			
+		} else {
+			if (head.next == head) {
+				System.out.println(head.data + " <-> " + tmp.data);
+				return;
+			}
+
+			System.out.print(head.data + " <-> ");
+			tmp = head.next;
+
+			while (tmp.next != head) {
+				System.out.print(tmp.data + " <-> ");
+				tmp = tmp.next;
+			}
+
+			System.out.print(tmp.data + " <-> ");
+
+			tmp = tmp.next;
+
+			System.out.println(tmp.data);
 		}
-
-		System.out.print(tmp.data + " <-> ");
-
-		tmp = tmp.next;
-
-		System.out.println(tmp.data);
+		
 
 	}
 	
@@ -185,6 +211,10 @@ public class CDLinkedList<T> extends LinkedList<T>{
 	
 	public void setHead(Node<T> head) {
 		this.head = head;
+	}
+	
+	public void setEnd(Node<T> end) {
+		this.end = end;
 	}
 	
 	public Node<T> getHead() {

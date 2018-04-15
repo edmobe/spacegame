@@ -49,7 +49,7 @@ public class EnemyRowBasic extends EnemyRow {
 
 				Enemy TempEnemy = row.get(i);
 
-				if (TempEnemy.update()) {
+				if (TempEnemy.update() == 1) {
 					x += 40;
 				}
 			}

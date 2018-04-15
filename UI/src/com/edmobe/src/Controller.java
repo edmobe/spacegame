@@ -9,47 +9,53 @@ import java.util.Random;
 import javax.swing.ImageIcon;
 
 import com.edmobe.src.enemyrows.EnemyRowFactory;
-import com.edmobe.src.input.Server;
+import com.edmobe.src.inputAndOutput.MessageSender;
+import com.edmobe.src.inputAndOutput.Server;
 import com.edmobe.src.enemyrows.EnemyRow;
 import com.edmobe.src.lists.LinkedList;
 import com.edmobe.src.objects.Bullet;
 import com.edmobe.src.objects.Enemy;
+import com.edmobe.src.objects.Player;
 
 public class Controller {
-	
-	Thread server = new Server("server");
-
+		
 	private LinkedList<Bullet> bulletList = new LinkedList<Bullet>(); // list of all the bullets.
 	private EnemyRowFactory enemyRowFactory = new EnemyRowFactory(this);
 	private EnemyRow enemyRow;
 	private boolean waiting = true; // waiting for server;
 	
 	private String waitingimage = "/images/waiting.png"; // waiting server image path.
+	private String waiting2image = "/images/waiting2.png"; // waiting2 server image path.
 	private String gameoverimage = "/images/gameover.png"; // game over image path.
 
 	private Random random = new Random();
 
-	Bullet TempBullet; // temporal bullet.
-	Enemy TempEnemy; // temporal enemy.
+	private Bullet TempBullet; // temporal bullet.
 
-	public Game game; // game object.
+	private Thread server;
+	private Thread messageSender;
 
 	public int bulletDelay = 0;
 
-	public Controller(Game game) {
+	public Controller(Player player) {
 		
 		Game.randomRowType = random.nextInt(6);
 		Game.nextRowType = random.nextInt(6);
-		this.game = game;
+		
+		server = new Server(player, this);
+		messageSender = new MessageSender();
 		
 		server.start();
+		messageSender.start();
 		
 		setNewRandom();
 
-		enemyRow = enemyRowFactory.getEnemyRow(4); // creates a new EnemyRow based on the random input.
+		enemyRow = enemyRowFactory.getEnemyRow(Game.randomRowType); // creates a new EnemyRow based on the random input.
 	}
 
 	public void update() {
+		
+		// System.out.println(((Server) server).getMessage());
 		
 		for (int i = 0; i < bulletList.size(); i++) { // for every bullet in the linked list.
 			TempBullet = bulletList.get(i);
@@ -75,17 +81,18 @@ public class Controller {
 
 				Game.level += 1;
 			}
-
 			
-			if (((Server) server).getMessage() == null) {
+			if (Game.usePhone && ((Server) server).getMessage() == null) {
 				waiting = true;
 			} else {
 				waiting = false;
-			enemyRow.update();
+				enemyRow.update();
 			}
+			
 		} else {
 			enemyRow.emptyRow();
 		}
+		
 		
 	}
 
@@ -98,8 +105,8 @@ public class Controller {
 			g2d.setColor(new Color(255, 255, 255));
 			g2d.drawString("Level: " + Game.level, 20, 420);
 			g2d.drawString("Score: " + Game.score, 20, 450);
-			g2d.drawString("Current Row: " + getRowString(Game.randomRowType), 450, 420);
-			g2d.drawString("Next Row: " + getRowString(Game.nextRowType), 450, 450);
+			g2d.drawString("Current Row: " + Game.getRowString(Game.randomRowType), 450, 420);
+			g2d.drawString("Next Row: " + Game.getRowString(Game.nextRowType), 450, 450);
 		}
 		
 		
@@ -113,6 +120,7 @@ public class Controller {
 		
 		if (waiting) {
 			g2d.drawImage(getWaitingImage(), 100, 100, null); // draws waiting image on the screen.
+			g2d.drawImage(getWaiting2Image(), 160, 150, null); // draws waiting image on the screen.
 		}
 		
 		
@@ -120,7 +128,7 @@ public class Controller {
 
 	public void setNewRandom() {
 		Game.randomRowType = Game.nextRowType;
-		Game.nextRowType = random.nextInt(2);
+		Game.nextRowType = random.nextInt(6);
 	}
 
 	public void addBullet(Bullet block) {
@@ -148,24 +156,14 @@ public class Controller {
 		return icon.getImage(); // returns the player image resized.
 	}
 	
+	public Image getWaiting2Image() {
+		ImageIcon icon = new ImageIcon(getClass().getResource(waiting2image)); // player image.
+		return icon.getImage(); // returns the player image resized.
+	}
+	
 	public Image getGameOverImage() {
 		ImageIcon icon = new ImageIcon(getClass().getResource(gameoverimage)); // player image.
 		return icon.getImage(); // returns the player image resized.
 	}
 	
-	public String getRowString(int type) {
-		if (type == 0) {
-			return "Basic";
-		} else if (type == 1) {
-			return "A Class";
-		} else if (type == 2) {
-			return "B Class";
-		} else if (type == 3) {
-			return "C Class";
-		} else if (type == 4) {
-			return "D Class";
-		} else {
-			return "E Class";
-		}
-	}
 }

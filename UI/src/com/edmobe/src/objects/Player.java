@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.ImageIcon;
 
+import com.edmobe.src.Game;
 import com.edmobe.src.GlobalPosition;
 
 /**
@@ -17,9 +18,6 @@ public class Player extends GlobalPosition {
 
 	private int velX = 0; // x axis speed.
 
-	private boolean right = false; // indicates that the player is moving right.
-	private boolean left = false; // indicates that the player is moving left.
-
 	private String playerimage = "/images/player.png"; // player image path.
 
 	public Player(int x, int y) {
@@ -30,10 +28,10 @@ public class Player extends GlobalPosition {
 	}
 
 	public void update() { // update player's changing parameters.
-		if (x == 0 && left) {
+		if (x == 0 && Game.left) {
 			velX = 0;
 		} // setting left side limit.
-		else if (x == 590 && right) {
+		else if (x == 590 && Game.right) {
 			velX = 0;
 		} // setting right side limit.
 		x += velX; // modifies x position based on the keyboard inputs.
@@ -43,30 +41,45 @@ public class Player extends GlobalPosition {
 		int key = event.getKeyCode(); // gets the pressed key code for the following validations.
 
 		if (key == KeyEvent.VK_RIGHT) { // if the right button is pressed.
-			velX = 5; // increase the x position.
-			right = true; // the player object moves right.
+			moveRight();
 		} else if (key == KeyEvent.VK_LEFT) { // if the left button is pressed.
-			velX = -5; // decrease the x position.
-			left = true; // the player object moves left.
+			moveLeft();
 		}
 	}
 
 	public void keyReleased(KeyEvent event) { // when a key is released.
 		int key = event.getKeyCode(); // gets the pressed key code for the following validations.
-
+		
 		if (key == KeyEvent.VK_RIGHT) { // if the right button is released.
-			if (left == false) {
+			if (Game.left == false) {
 				velX = 0;
 			} // if the player is not going left, the player stops.
-			right = false; // the player is not moving right anymore.
+			Game.right = false; // the player is not moving right anymore.
 		} else if (key == KeyEvent.VK_LEFT) { // if the left button is released.
-			if (right == false) {
+			if (Game.right == false) {
 				velX = 0;
 			} // if the player is not going right, the player stops.
-			left = false; // the player is not moving left anymore.
+			Game.left = false; // the player is not moving left anymore.
 		}
 	}
+	
+	public void moveRight() {
+		velX = 5; // increase the x position.
+		Game.left = false;
+		Game.right = true; // the player object moves right.
+	}
 
+	public void moveLeft() {
+		velX = -5; // decrease the x position.
+		Game.right = false;
+		Game.left = true; // the player object moves left.
+	}
+	
+	public void stopMoving() {
+		velX = 0;
+	}
+	
+	
 	public void render(Graphics2D g2d) {
 		g2d.drawImage(getImage(), x, y, null); // draws player image on the screen.
 	}

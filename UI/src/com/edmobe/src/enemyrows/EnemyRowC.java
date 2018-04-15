@@ -69,7 +69,7 @@ public class EnemyRowC extends EnemyRow {
 
 				Enemy TempEnemy = crow.get(i);
 
-				if (TempEnemy.update()) {
+				if (TempEnemy.update() == 1) {
 					if (TempEnemy instanceof Boss) {
 						if (crow.size() == 0) {
 							crow.clear();

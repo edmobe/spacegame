@@ -1,9 +1,10 @@
-package com.edmobe.src.input;
+package com.edmobe.src.inputAndOutput;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import com.edmobe.src.Controller;
+import com.edmobe.src.Game;
 import com.edmobe.src.objects.Bullet;
 import com.edmobe.src.objects.Player;
 
@@ -24,8 +25,14 @@ public class KeyInput extends KeyAdapter {
 		if (key == KeyEvent.VK_SPACE) {
 			if (c.bulletDelay == 0) {
 				c.addBullet(new Bullet(player.x + 17, player.y - 50));
-				c.bulletDelay = 40;
+				if (Game.level < 5) {
+					c.bulletDelay = 35 - Game.level;
+				} else {
+					c.bulletDelay = 30;
+				}
 			}
+		} else if (key == KeyEvent.VK_S) {
+			Game.usePhone = false;
 		}
 		// adds a bullet when the space key is pressed and the player hasn't shoot
 		// recently.

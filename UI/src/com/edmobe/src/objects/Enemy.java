@@ -16,6 +16,7 @@ public class Enemy extends GlobalPosition {
 	private Controller c;
 
 	public int health;
+	public int initialI;
 	
 	public Enemy(int x, int y, Controller c) {
 		
@@ -28,17 +29,18 @@ public class Enemy extends GlobalPosition {
 		this.c = c;
 	}
 
-	public boolean update() { // update enemy's changing parameters.
+	public int update() { // update enemy's changing parameters.
 		if (Physics.BulletCollision(this, c.getBullets())) {
 			health --;
 			Game.score++;
 			if (health == 0) {
 				c.removeEnemy(this);
-				return true;
+				return 1;
 			}
+			return 2;
 		}
 		
-		return false;
+		return 0;
 	}
 
 	public void render(Graphics2D g2d) {

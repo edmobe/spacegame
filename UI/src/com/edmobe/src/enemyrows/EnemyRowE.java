@@ -26,11 +26,22 @@ public class EnemyRowE extends EnemyRow {
 
 		this.c = c;
 
-		addEnemy(new Boss(x, y, c));
+		addEnemy(new Boss(x, 20, c));
+		
+		int initialX = 1;
 
-		for (int i = 0; i < 6; i++) {
+		for (int i = 1; i < 7; i++) {
+			
+			if (initialX == 4) {
+				initialX = -3;
+			}
 
-			addEnemy(new Enemy(x + i * 55, y, c));
+			Enemy TempEnemy = new Enemy(x + initialX * 80, 20, c);
+			TempEnemy.initialI = i;
+
+			addEnemy(TempEnemy);
+			
+			initialX++;
 
 		}
 	}
@@ -53,7 +64,7 @@ public class EnemyRowE extends EnemyRow {
 
 			Enemy TempEnemy = crow.get(i);
 
-			if (TempEnemy.update()) {
+			if (TempEnemy.update() == 1) {
 				if (TempEnemy instanceof Boss) {
 					if (crow.size() == 0) {
 						crow.clear();
@@ -65,7 +76,7 @@ public class EnemyRowE extends EnemyRow {
 
 						break;
 					}
-				} 
+				}
 			}
 		}
 
@@ -79,17 +90,16 @@ public class EnemyRowE extends EnemyRow {
 			for (int i = 0; i < crow.size(); i++) { // for every enemy in the linked list.
 
 				Enemy TempEnemy = crow.get(i);
-				
-				
+
 				if (i == 0) {
 					TempEnemy.y = y;
 					TempEnemy.x = x;
-				} else if (i > 3) {
-					TempEnemy.y = (int) (y - 40 * (i - 3) * Math.sin(Math.toRadians(angle)));
-					TempEnemy.x = (int) (x - 55 * (i - 3) * Math.cos(Math.toRadians(angle)));
+				} else if (TempEnemy.initialI > 3) {
+					TempEnemy.y = (int) (y - 40 * (TempEnemy.initialI - 3) * Math.sin(Math.toRadians(angle)));
+					TempEnemy.x = (int) (x - 55 * (TempEnemy.initialI - 3) * Math.cos(Math.toRadians(angle)));
 				} else {
-					TempEnemy.y = (int) (y + 40 * i * Math.sin(Math.toRadians(angle)));
-					TempEnemy.x = (int) (x + 55 * i * Math.cos(Math.toRadians(angle)));
+					TempEnemy.y = (int) (y + 40 * TempEnemy.initialI * Math.sin(Math.toRadians(angle)));
+					TempEnemy.x = (int) (x + 55 * TempEnemy.initialI * Math.cos(Math.toRadians(angle)));
 				}
 
 				if (TempEnemy.y >= 380) {

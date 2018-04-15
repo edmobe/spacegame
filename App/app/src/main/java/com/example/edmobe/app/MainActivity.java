@@ -5,23 +5,10 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-
-import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
-
-import com.example.edmobe.app.R;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.ServerSocket;
-import java.net.Socket;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
@@ -34,6 +21,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     private String shoot = "f";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +33,19 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         mySensor = SM.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         SM.registerListener(this, mySensor, SensorManager.SENSOR_DELAY_GAME);
 
+        TextView level = (TextView) findViewById(R.id.textView3);
+        TextView score = (TextView) findViewById(R.id.textView4);
+        TextView rowType = (TextView) findViewById(R.id.textView5);
+        TextView nextRow = (TextView) findViewById(R.id.textView6);
+
+        level.setText("Level: waiting for computer");
+        score.setText("Score: waiting for computer");
+        rowType.setText("Row class: waiting for computer");
+        nextRow.setText("Next row class: waiting for computer");
+
+        Thread server = new Thread(new Server(level, score, rowType, nextRow));
+        server.start();
+
     }
 
     @Override
@@ -53,15 +54,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         messageSender = new MessageSender();
 
-        if (y < -3) {
+        if (y < -2) {
             messageSender.execute("l" + shoot);
-        } else if (y > 3) {
+        } else if (y > 2) {
             messageSender.execute("r" + shoot);
         } else {
             messageSender.execute("c" + shoot);
         }
-
         shoot = "f";
+
 
     }
 
@@ -71,8 +72,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
     public void buttonOnClick(View v) {
-
         shoot = "t";
-
     }
+
 }

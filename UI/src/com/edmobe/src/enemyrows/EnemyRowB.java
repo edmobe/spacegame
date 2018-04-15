@@ -62,7 +62,7 @@ public class EnemyRowB extends EnemyRow {
 
 				Enemy TempEnemy = row.get(i);
 
-				if (TempEnemy.update()) {
+				if (TempEnemy.update() == 1) {
 					if (TempEnemy instanceof Boss) {
 						row.clear();
 					} else {

@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import com.edmobe.src.enemyrows.EnemyRow;
-import com.edmobe.src.input.KeyInput;
+import com.edmobe.src.inputAndOutput.KeyInput;
 import com.edmobe.src.lists.LinkedList;
 import com.edmobe.src.objects.Bullet;
 import com.edmobe.src.objects.Player;
@@ -36,7 +36,13 @@ public class Game extends JPanel implements ActionListener {
 	public static int score = 0;
 	public static int randomRowType;
 	public static int nextRowType;
+	
 	public static boolean over;
+	
+	public static boolean usePhone = true;
+	public static boolean right;
+	public static boolean left;
+	public static boolean up;
 
 	private static final long serialVersionUID = 1L; // sets an ID to the Game class.
 
@@ -51,7 +57,7 @@ public class Game extends JPanel implements ActionListener {
 		gamelooptimer.start(); // starts the game timer.
 
 		player = new Player(290, 420); // initializes the player.
-		c = new Controller(this); // initializes the controller.
+		c = new Controller(player); // initializes the controller.
 		
 		bulletList = c.getBullets();
 		enemyRow = c.getEnemies();
@@ -81,5 +87,25 @@ public class Game extends JPanel implements ActionListener {
 		player.update(); // updates the player.
 		c.update(); // updates the controller.
 		repaint(); // calls the paint method.
+	}
+	
+	public static String getRowString(int type) {
+		if (type == 0) {
+			return "Basic";
+		} else if (type == 1) {
+			return "A Class";
+		} else if (type == 2) {
+			return "B Class";
+		} else if (type == 3) {
+			return "C Class";
+		} else if (type == 4) {
+			return "D Class";
+		} else {
+			return "E Class";
+		}
+	}
+	
+	public Player getPlayer() {
+		return player;
 	}
 }
