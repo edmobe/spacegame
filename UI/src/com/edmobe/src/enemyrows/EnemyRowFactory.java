@@ -2,6 +2,11 @@ package com.edmobe.src.enemyrows;
 
 import com.edmobe.src.Controller;
 
+/**
+ * Creates rows of enemies
+ * @author edmobe
+ *
+ */
 public class EnemyRowFactory {
 
 	private Controller c;

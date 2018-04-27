@@ -17,78 +17,104 @@ import com.edmobe.src.objects.Bullet;
 import com.edmobe.src.objects.Player;
 
 /**
- * A class that defines the game's general parameters. Everything inside the
- * class is looped.
+ * A class that defines the game's general parameters.
  * 
  * @author edmobe
  *
  */
 public class Game extends JPanel implements ActionListener {
 
-	private Timer gamelooptimer; // timer variable for the loop.
-	private Player player; // player object.
-	private Controller c; // controller object.
-	
-	public LinkedList<Bullet> bulletList;
-	public EnemyRow enemyRow;
-	
-	public static int level = 1;
-	public static int score = 0;
-	public static int randomRowType;
-	public static int nextRowType;
-	
-	public static boolean over;
-	
-	public static boolean usePhone = true;
-	public static boolean right;
-	public static boolean left;
-	public static boolean up;
+	private Timer gamelooptimer; // timer variable for the loop
+	private Player player; // player object
+	private Controller c; // controller object
 
-	private static final long serialVersionUID = 1L; // sets an ID to the Game class.
+	public LinkedList<Bullet> bulletList; // list of bullets
+	public EnemyRow enemyRow; // actual row of enemies
 
-	private String background = "/images/bg.gif"; // background image path.
+	public static int level = 1; // actual level
+	public static int score = 0; // actual score
+	public static int randomRowType; // actual random row type
+	public static int nextRowType; // next random row type
 
-	public Game() {		
-		
-		setFocusable(true); // its main function is allowing the player to control the game right.
-		// after he runs the MainClass, without having to click on the window.
+	public static boolean over; // determines if the game is over
 
-		gamelooptimer = new Timer(10, this); // instantiates the loop timer (10 ms -> 100 fps).
-		gamelooptimer.start(); // starts the game timer.
+	public static boolean usePhone; // determines if the phone will be used
+	public static boolean right; // the player moves right
+	public static boolean left; // the player moves left
 
-		player = new Player(290, 420); // initializes the player.
-		c = new Controller(player); // initializes the controller.
-		
-		bulletList = c.getBullets();
-		enemyRow = c.getEnemies();
+	private static final long serialVersionUID = 1L; // sets an ID to the Game class
 
-		addKeyListener(new KeyInput(player, c)); // adds key listener for every key event.
-		
+	private String background = "/images/bg.gif"; // background image path
+
+	/**
+	 * {@code Game} constructor.
+	 */
+	public Game() {
+
+		setFocusable(true); // its main function is allowing the player to control the game right
+		// after he runs the MainClass, without having to click on the window
+
+		gamelooptimer = new Timer(10, this); // instantiates the loop timer (10 ms -> 100 fps)
+		gamelooptimer.start(); // starts the game timer
+
+		player = new Player(290, 420); // initializes the player
+		c = new Controller(player); // initializes the controller
+
+		bulletList = c.getBullets(); // creates a list of bullets
+		enemyRow = c.getEnemies(); // creates the enemy row object
+
+		addKeyListener(new KeyInput(player, c)); // adds key listener for every key event
+
 	}
 
+	/**
+	 * Paints every image and text on the display.
+	 * 
+	 * @param g
+	 *            {@code Graphics} object
+	 */
 	public void paint(Graphics g) {
-		super.paint(g); // paints on the JPanel.
+		super.paint(g); // paints on the JPanel
 
-		Graphics2D g2d = (Graphics2D) g; // transfer the graphics into a Graphics2D function.
+		Graphics2D g2d = (Graphics2D) g; // transfer the graphics into a Graphics2D function
 
-		g2d.drawImage(getBackgroundImage(), 0, 0, null); // draws the background.
-		
-		c.render(g2d); // draws all the bullets.
-		player.render(g2d); // draws the player.
+		g2d.drawImage(getBackgroundImage(), 0, 0, null); // draws the background
+
+		c.render(g2d); // draws all the bullets
+		player.render(g2d); // draws the player
 	}
 
+	/**
+	 * Gets the background image.
+	 * 
+	 * @return the {@code Image} object of the background
+	 */
 	public Image getBackgroundImage() {
-		ImageIcon i = new ImageIcon(getClass().getResource(background)); // background image.
-		return i.getImage(); // returns the background image.
+		ImageIcon i = new ImageIcon(getClass().getResource(background)); // background image
+		return i.getImage(); // returns the background image
 	}
 
+	/**
+	 * Game loop.
+	 * 
+	 * @param e
+	 *            {@code ActionEvent} object
+	 */
 	@Override
-	public void actionPerformed(ActionEvent e) { // game loop.
-		player.update(); // updates the player.
-		c.update(); // updates the controller.
-		repaint(); // calls the paint method.
+	public void actionPerformed(ActionEvent e) { // game loop
+		player.update(); // updates the player
+		c.update(); // updates the controller
+		repaint(); // calls the paint method
 	}
-	
+
+	/**
+	 * Is an adapter. Transforms the row type from integer to {@code String} in
+	 * order to display it on the phone.
+	 * 
+	 * @param type
+	 *            integer that indicates the row type
+	 * @return {@code String} that indicates the row type
+	 */
 	public static String getRowString(int type) {
 		if (type == 0) {
 			return "Basic";
@@ -104,7 +130,12 @@ public class Game extends JPanel implements ActionListener {
 			return "E Class";
 		}
 	}
-	
+
+	/**
+	 * Gets the {@code Player} object.
+	 * 
+	 * @return {@code Player} object.
+	 */
 	public Player getPlayer() {
 		return player;
 	}

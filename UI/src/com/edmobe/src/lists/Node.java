@@ -1,5 +1,11 @@
 package com.edmobe.src.lists;
 
+/**
+ * Node object for the linked list
+ * @author edmobe
+ *
+ * @param <T> node data instance
+ */
 public class Node<T> {
 	public T data;
 	public Node<T> next;

@@ -13,7 +13,7 @@ public class MessageSender extends Thread {
 		
 		while (true) {
 			try {
-				Socket s = new Socket("192.168.1.130", 5001);
+				Socket s = new Socket("10.234.31.68", 5001);
 				PrintWriter pw = new PrintWriter(s.getOutputStream());
 				pw.write(Game.level + "/" + Game.score + "/" + Game.getRowString(Game.randomRowType) + "/"
 						+ Game.getRowString(Game.nextRowType));

@@ -4,9 +4,17 @@ import java.util.Random;
 
 import com.edmobe.src.objects.Enemy;
 
-public class CDLinkedList<T> extends LinkedList<T>{
+/**
+ * Circular double linked list
+ * 
+ * @author edmobe
+ *
+ * @param <T>
+ *            generic object instance
+ */
+public class CDLinkedList<T> extends LinkedList<T> {
 
-	private Node<T> end;
+	private Node<T> end; // last node
 
 	public CDLinkedList() {
 		head = null;
@@ -14,39 +22,51 @@ public class CDLinkedList<T> extends LinkedList<T>{
 		length = 0;
 	}
 
-	public boolean isEmpty() {
-		return head == null;
-	}
-
+	/**
+	 * Adds an object at the end of the list
+	 */
 	@Override
 	public void add(T object) {
-		Node<T> tmp = new Node<T>(object, null, null);
+		Node<T> tmp = new Node<T>(object, null, null); // creates a new node with the object
 		if (head == null) {
+			/*
+			 * creates a new head/end
+			 */
 			tmp.next = tmp;
 			tmp.previous = tmp;
 			head = tmp;
 			end = head;
 		} else {
+			/*
+			 * sets the new end
+			 */
 			tmp.previous = end;
 			end.next = tmp;
 			head.previous = tmp;
 			tmp.next = head;
 			end = tmp;
 		}
-		length++;
+
+		length++; // increases the length of the list
 	}
 
 	@Override
 	public void addFirst(T object) {
 
-		Node<T> tmp = new Node<T>(object, null, null);
+		Node<T> tmp = new Node<T>(object, null, null); // creates a new node with the object
 
 		if (head == null) {
+			/*
+			 * creates a new head/end
+			 */
 			tmp.next = tmp;
 			tmp.previous = tmp;
 			head = tmp;
 			end = head;
 		} else {
+			/*
+			 * sets the new head
+			 */
 			tmp.previous = end;
 			end.next = tmp;
 			head.previous = tmp;
@@ -54,23 +74,17 @@ public class CDLinkedList<T> extends LinkedList<T>{
 			head = tmp;
 		}
 
-		length++;
+		length++; // increases the length of the list
 
-	}
-	
-	public void addSecond (T object) { // validations are not required because is an internal method.
-		Node<T> tmp = new Node<T>(object, head.next, head);
-		head.next = tmp;
-		tmp.next.previous = tmp;
 	}
 
 	@Override
 	public void remove(T object) {
-		
+
 		if (head == null || object == null) {
 			throw new RuntimeException("Cannot delete");
 		}
-		
+
 		if (head.data.equals(object)) {
 			if (length == 1) {
 				head = null;
@@ -82,10 +96,10 @@ public class CDLinkedList<T> extends LinkedList<T>{
 				head.previous = end;
 				length--;
 			}
-			
+
 			return;
 		}
-		
+
 		if (end.data.equals(object)) {
 			end = end.previous;
 			head.previous = end;
@@ -93,13 +107,13 @@ public class CDLinkedList<T> extends LinkedList<T>{
 			length--;
 			return;
 		}
-		
+
 		Node<T> tmp = head;
-		
-		while(tmp.next != head && tmp.data != object) {
+
+		while (tmp.next != head && tmp.data != object) {
 			tmp = tmp.next;
 		}
-		
+
 		if (tmp.data == object) {
 			tmp.previous.next = tmp.next;
 			tmp.next.previous = tmp.previous;
@@ -108,22 +122,22 @@ public class CDLinkedList<T> extends LinkedList<T>{
 			throw new RuntimeException("Cannot delete");
 		}
 	}
-	
+
 	@Override
 	public T get(int pos) {
 		int actPos = 0;
 		Node<T> tmp = head;
-		
+
 		while (actPos != pos) {
 			tmp = tmp.next;
 			actPos++;
 		}
-		
+
 		return tmp.data;
 	}
 
 	@Override
-	public void print() {
+	public void print() { // for debugging
 		Node<T> tmp = head;
 
 		if (isEmpty()) {
@@ -132,26 +146,26 @@ public class CDLinkedList<T> extends LinkedList<T>{
 		}
 
 		if (tmp.data instanceof Enemy) {
-			
+
 			if (head.next == head) {
-				System.out.println(((Enemy)head.data).health + " <-> " + ((Enemy)tmp.data).health);
+				System.out.println(((Enemy) head.data).health + " <-> " + ((Enemy) tmp.data).health);
 				return;
 			}
 
-			System.out.print(((Enemy)head.data).health + " <-> ");
+			System.out.print(((Enemy) head.data).health + " <-> ");
 			tmp = head.next;
 
 			while (tmp.next != head) {
-				System.out.print(((Enemy)tmp.data).health + " <-> ");
+				System.out.print(((Enemy) tmp.data).health + " <-> ");
 				tmp = tmp.next;
 			}
 
-			System.out.print(((Enemy)tmp.data).health + " <-> ");
+			System.out.print(((Enemy) tmp.data).health + " <-> ");
 
 			tmp = tmp.next;
 
-			System.out.println(((Enemy)tmp.data).health);
-			
+			System.out.println(((Enemy) tmp.data).health);
+
 		} else {
 			if (head.next == head) {
 				System.out.println(head.data + " <-> " + tmp.data);
@@ -172,10 +186,9 @@ public class CDLinkedList<T> extends LinkedList<T>{
 
 			System.out.println(tmp.data);
 		}
-		
 
 	}
-	
+
 	@Override
 	public void shuffle() {
 		CDLinkedList<T> tmpList = new CDLinkedList<T>();
@@ -201,26 +214,18 @@ public class CDLinkedList<T> extends LinkedList<T>{
 			tmp = tmp2.next;
 		}
 	}
-	
+
 	@Override
 	public void clear() {
 		head = null;
 		end = null;
 		length = 0;
 	}
-	
-	public void setHead(Node<T> head) {
-		this.head = head;
-	}
-	
+
 	public void setEnd(Node<T> end) {
 		this.end = end;
 	}
-	
-	public Node<T> getHead() {
-		return head;
-	}
-	
+
 	public Node<T> getEnd() {
 		return end;
 	}
