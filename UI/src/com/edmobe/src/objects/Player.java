@@ -50,9 +50,9 @@ public class Player extends GlobalPosition {
 	public void keyPressed(KeyEvent event) {
 		int key = event.getKeyCode(); // gets the pressed key code for the following validations
 
-		if (key == KeyEvent.VK_RIGHT) { // if the right button is pressed
+		if (key == KeyEvent.VK_RIGHT && !Game.paused) { // if the right button is pressed
 			moveRight();
-		} else if (key == KeyEvent.VK_LEFT) { // if the left button is pressed
+		} else if (key == KeyEvent.VK_LEFT && !Game.paused) { // if the left button is pressed
 			moveLeft();
 		}
 	}

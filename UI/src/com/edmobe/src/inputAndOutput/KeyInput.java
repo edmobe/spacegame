@@ -28,7 +28,7 @@ public class KeyInput extends KeyAdapter {
 		int key = event.getKeyCode();
 
 		player.keyPressed(event); // calls player's keyPressed method.
-		if (key == KeyEvent.VK_SPACE) { // if the key pressed was space
+		if (key == KeyEvent.VK_SPACE && !Game.paused) { // if the key pressed was space
 			if (c.bulletDelay == 0) { // if the player has not shot recently
 				c.addBullet(new Bullet(player.x + 17, player.y - 50)); // creates a bullet
 				if (Game.level < 5) { // if the game is starting
@@ -38,7 +38,9 @@ public class KeyInput extends KeyAdapter {
 				}
 			}
 		} else if (key == KeyEvent.VK_S) { // if the key pressed is space
-			Game.usePhone = !Game.usePhone; // the phone will not be used
+			Game.useKeyboard = true; // the phone will not be used
+		} else if (key == KeyEvent.VK_P) {
+			Game.paused = !Game.paused;
 		}
 	}
 

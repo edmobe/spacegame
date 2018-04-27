@@ -12,6 +12,7 @@ import javax.swing.Timer;
 
 import com.edmobe.src.enemyrows.EnemyRow;
 import com.edmobe.src.inputAndOutput.KeyInput;
+import com.edmobe.src.inputAndOutput.Server;
 import com.edmobe.src.lists.LinkedList;
 import com.edmobe.src.objects.Bullet;
 import com.edmobe.src.objects.Player;
@@ -38,13 +39,16 @@ public class Game extends JPanel implements ActionListener {
 
 	public static boolean over; // determines if the game is over
 
-	public static boolean usePhone; // determines if the phone will be used
+	public static boolean useKeyboard; // determines if the phone will be used
+	public static boolean paused; // determines if the game is paused
 	public static boolean right; // the player moves right
 	public static boolean left; // the player moves left
 
 	private static final long serialVersionUID = 1L; // sets an ID to the Game class
 
 	private String background = "/images/bg.gif"; // background image path
+	
+	private Thread server; // a Thread that receives client data
 
 	/**
 	 * {@code Game} constructor.
@@ -54,9 +58,6 @@ public class Game extends JPanel implements ActionListener {
 		setFocusable(true); // its main function is allowing the player to control the game right
 		// after he runs the MainClass, without having to click on the window
 
-		gamelooptimer = new Timer(10, this); // instantiates the loop timer (10 ms -> 100 fps)
-		gamelooptimer.start(); // starts the game timer
-
 		player = new Player(290, 420); // initializes the player
 		c = new Controller(player); // initializes the controller
 
@@ -64,6 +65,12 @@ public class Game extends JPanel implements ActionListener {
 		enemyRow = c.getEnemies(); // creates the enemy row object
 
 		addKeyListener(new KeyInput(player, c)); // adds key listener for every key event
+		
+		server = new Server(player, c); // instantiates the Server
+		server.start(); // starts the Server thread
+		
+		gamelooptimer = new Timer(10, this); // instantiates the loop timer (10 ms -> 100 fps)
+		gamelooptimer.start(); // starts the game timer
 
 	}
 

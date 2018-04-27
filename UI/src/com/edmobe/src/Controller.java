@@ -10,7 +10,6 @@ import java.util.Random;
 import javax.swing.ImageIcon;
 
 import com.edmobe.src.enemyrows.EnemyRowFactory;
-import com.edmobe.src.inputAndOutput.MessageSender;
 import com.edmobe.src.inputAndOutput.Server;
 import com.edmobe.src.enemyrows.EnemyRow;
 import com.edmobe.src.lists.LinkedList;
@@ -27,7 +26,6 @@ import com.edmobe.src.objects.Player;
  * @see Random
  * @see Bullet
  * @see Server
- * @see MessageSender
  */
 public class Controller {
 
@@ -44,9 +42,6 @@ public class Controller {
 
 	private Bullet TempBullet; // temporal bullet
 
-	private Thread server; // a Thread that receives client data
-	private Thread messageSender; // a Thread that sends data to the client
-
 	public int bulletDelay = 0; // used to control how often a bullet can be created
 
 	/**
@@ -59,12 +54,6 @@ public class Controller {
 
 		Game.randomRowType = random.nextInt(6); // defines the current row type id
 		Game.nextRowType = random.nextInt(6); // defines the next row type id
-
-		server = new Server(player, this); // instantiates the Server
-		messageSender = new MessageSender(); // instantiates the MessageSender
-
-		server.start(); // starts the Server thread
-		messageSender.start(); // starts the MessageSender thread
 
 		setNewRandom();
 
@@ -89,11 +78,14 @@ public class Controller {
 				Game.level += 1; // increases level
 			}
 
-			if (!Game.usePhone && ((Server) server).getMessage() == null) {
+
+			if (!Game.useKeyboard && Server.getMessage() == null) {
 				waiting = true; // the game waits if the phone is not being used or there is no message received
 			} else {
 				waiting = false;
-				enemyRow.update(); // the enemy row must be updated constantly
+				if (!Game.paused) { // if the game is not paused
+					enemyRow.update(); // the enemy row must be updated constantly
+				}
 			}
 
 		} else {
@@ -120,6 +112,7 @@ public class Controller {
 			g2d.drawString("Score: " + Game.score, 20, 450);
 			g2d.drawString("Current Row: " + Game.getRowString(Game.randomRowType), 450, 420);
 			g2d.drawString("Next Row: " + Game.getRowString(Game.nextRowType), 450, 450);
+			g2d.drawString("Press P to pause", 475, 20);
 		}
 
 		for (int i = 0; i < bulletList.size(); i++) { // for every bullet in the linked list
